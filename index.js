@@ -39,6 +39,3 @@ app.use("/api", bye_product_router);//BYE PRODUCT ROUTER
 app.listen(process.env.PORT, () => {
     console.log("SERVER PORT CONNECTED");
 });
-
-
-

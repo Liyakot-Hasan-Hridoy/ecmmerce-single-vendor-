@@ -38,8 +38,9 @@ const upload = multer({
 });// IMAGE VALIDATION
 
 const storeController = require("../controller/store_controller");
+const authtoken = require("../middleware/middleware");
 
-store_router.post("/create_store", upload.single("logo"), storeController.createStore);
-store_router.post("/find-nearest-store", storeController.findneareststore);
+store_router.post("/create_store",authtoken, upload.single("logo"), storeController.createStore);
+store_router.post("/find-nearest-store",authtoken, storeController.findneareststore);
 
 module.exports = store_router;

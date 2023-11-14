@@ -1,28 +1,28 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");
 
-// const verifyToken = (req, res, next) => {
-//     try {
-//         let token;
-//         let authHeader = req.headers.Authorization || req.headers.authorization;
-//         if (authHeader && authHeader.startsWith("Bearer")) {
-//             token = authHeader.split(" ")[1];
-//             jwt.verify(token, config.secrerkye, (err, user) => {
-//                 if (err) {
-//                     console.log(err);
-//                     return res.status(401).json({ error: "Invalide token" });
-//                 }
-//                 req.user = user;
+const verifyToken = (req, res, next) => {
+    try {
+        let token;
+        let authHeader = req.headers.Authorization || req.headers.authorization;
+        if (authHeader && authHeader.startsWith("Bearer")) {
+            token = authHeader.split(" ")[1];
+            jwt.verify(token, config.secrerkye, (err, user) => {
+                if (err) {
+                    console.log(err);
+                    return res.status(401).json({ error: "Invalide token" });
+                }
+                req.user = user;
 
-//                 next();
-//             });
-//         }
+                next();
+            });
+        }
 
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(500).json({ error: "Internal Server error" });
-//     }
-// }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "Internal Server error" });
+    }
+}
 
 // const verifyToken = async (req, res, next) => {
 //     const token = req.body.token || req.query.token || req.headers["authorization"];
@@ -42,4 +42,4 @@ const config = require("../config/config");
 
 // tokenMiddleware
 
-// module.exports = verifyToken;
+module.exports = verifyToken;

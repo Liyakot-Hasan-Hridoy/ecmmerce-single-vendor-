@@ -4,6 +4,7 @@ const Product_route = require("express").Router();
 const bodyparser = require("body-parser");
 Product_route.use(bodyparser.json());
 Product_route.use(bodyparser.urlencoded({ extended: true }));
+const authtoken = require("../middleware/middleware");
 
 const productController = require("../controller/product_controller");
 
@@ -41,9 +42,9 @@ const upload = multer({
 
 
 
-Product_route.post("/add-product", upload.array("images"),productController.addProduct);
-Product_route.get("/get-product", productController.getProduct);
-Product_route.get("/search-product", productController.searchProduct);
-Product_route.post("/paginate", productController.productPaginate);
+Product_route.post("/add-product",authtoken, upload.array("images"),productController.addProduct);
+Product_route.get("/get-product", authtoken, productController.getProduct);
+Product_route.get("/search-product",authtoken, productController.searchProduct);
+Product_route.post("/paginate",authtoken, productController.productPaginate);
 
 module.exports = Product_route;

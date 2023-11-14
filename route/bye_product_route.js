@@ -5,9 +5,10 @@ bye_product_route.use(bodyparsar.json());
 bye_product_route.use(bodyparsar.urlencoded({ extended: true }));
 
 const byeProductController = require("../controller/bye_product_controller");
+const authtoken = require("../middleware/middleware");
 
 
-bye_product_route.post("/bye-product", byeProductController.byeProduct);
+bye_product_route.post("/bye-product",authtoken, byeProductController.byeProduct);
 
 
 

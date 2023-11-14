@@ -6,7 +6,8 @@ category_route.use(bodyparser.json());
 category_route.use(bodyparser.urlencoded({ extended: true }));
 
 const categoryController = require("../controller/category_controller");
+const authtoken = require("../middleware/middleware");
 
-category_route.post("/add-category", categoryController.addCategory);
+category_route.post("/add-category",authtoken, categoryController.addCategory);
 
 module.exports = category_route;
