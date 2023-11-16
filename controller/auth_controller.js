@@ -48,7 +48,7 @@ const sendResetPasswordMail = async (name, email, token) => {
 //JWT TOKEN 
 const creat_token = async (id) => {
     try {
-        const token = await jwt.sign({ _id: id }, config.secrerkye);
+        const token =  jwt.sign({ _id: id }, "ok");
         return token;
     } catch (error) {
         res.status(400).json(error.massage);
