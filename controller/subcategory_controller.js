@@ -43,5 +43,19 @@ module.exports = {
         } catch (error) {
             res.status(400).json(error.message);
         }
+    },
+
+
+
+    getSubCategory: async (req, res) => {
+        try {
+            const subcategoryData = await Subcategory.find();
+            res.status(200).json({success:true, msg:"Sub Category Details.", data:subcategoryData});
+        } catch (error) {
+            res.status(400).json(error.message);
+        }
     }
+
+
+    
 }

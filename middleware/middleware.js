@@ -8,12 +8,12 @@ const verifyToken = (req, res, next) => {
 
         if (authHeader && authHeader.startsWith("Bearer")) {
             token = authHeader.split(" ")[1];
-            jwt.verify(token, 'ok', (err, decoded) => {
+            jwt.verify(token, "ok", (err, user) => {
                 if (err) {
                     console.error(err);
                     return res.status(401).json({ success: false, msg: "Invalid token" });
                 }
-                req.user = decoded;
+                req.user = user;
                 next();
             });
         } else {

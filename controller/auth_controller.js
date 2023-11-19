@@ -26,7 +26,8 @@ const sendResetPasswordMail = async (name, email, token) => {
             from: config.emailUser,
             to: email,
             subject: "for Reser Password",
-            html: "<p> Hii " + name + ", Please copy the link and <a href='http://localhost:3000/api/reset-password?token=" + token + "'> reset your password</a> "
+            // html: "<p> Hii " + name + ", Please copy the link and <a href='http://localhost:3000/api/reset-password?token=" + token + "'> reset your password</a> "
+            html: `<p> Hi ${name}, Please copy the link and <a href='http://localhost:3000/api/reset-password?token=${token}'> reset your password</a></p>`
         }
 
         transporter.sendMail(mailOption, function (error, info) {
@@ -41,19 +42,19 @@ const sendResetPasswordMail = async (name, email, token) => {
         res.status(400).json(error.massage);
     }
 
-}// RESET PASSWORD MAIL
+};// RESET PASSWORD MAIL
 
 
 
 //JWT TOKEN 
 const creat_token = async (id) => {
     try {
-        const token =  jwt.sign({ _id: id }, "ok");
+        const token = jwt.sign({ _id: id }, "ok");
         return token;
     } catch (error) {
         res.status(400).json(error.massage);
     }
-}//JWT TOKEN
+};//JWT TOKEN
 
 
 // Password validation
@@ -119,8 +120,8 @@ module.exports = {
                     password: sPassword,
                     type: req.body.type
                 });
-
-                const userData = await User.findOne({ email: req.body.email });
+                const email = req.body.email;
+                const userData = await User.findOne({ email: email });
 
                 if (userData) {
 
@@ -168,15 +169,11 @@ module.exports = {
                         token: token
                     }
 
-                    const response = {
-                        success: true,
-                        msg: "User Details",
-                        data: userResult
-                    }
+
 
                     // const token = jwt.sign({ email: user.email, id: user._id }, secretkey);
 
-                    res.status(200).json(response);
+                    res.status(200).json({ success: true, msg: "User Details", data: userResult });
 
                 } else {
 
@@ -187,13 +184,6 @@ module.exports = {
                 return res.status(200).json({ success: false, msg: "LOGIN DETAILS ARE INCORRECT" });
 
             }
-
-
-
-
-
-
-
 
 
         } catch (error) {
@@ -246,7 +236,7 @@ module.exports = {
             if (userData) {
 
                 const randomString = randomstring.generate();
-                const data = await User.updateOne({ email: email }, { $set: { token: randomString } });
+                await User.updateOne({ email: email }, { $set: { token: randomString } });
 
                 sendResetPasswordMail(userData.name, userData.email, randomString);
 

@@ -42,5 +42,6 @@ const authtoken = require("../middleware/middleware");
 
 store_router.post("/create_store",authtoken, upload.single("logo"), storeController.createStore);
 store_router.post("/find-nearest-store",authtoken, storeController.findneareststore);
+store_router.get("/get-all-store",authtoken, storeController.get_allStore);
 
 module.exports = store_router;

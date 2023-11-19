@@ -48,6 +48,15 @@ module.exports = {
 
     },//CREATE STORE 
 
+    get_allStore: async (req, res) => {
+        try {
+            const get_storeData = await Store.find();
+            res.status(200).json({success:true, msg:"store data", data:get_storeData});
+        } catch (error) {
+            res.status(400).json(error.message);
+        }
+    },
+
     //GET store for product CATEGORY
     getStore: async (id) => {
         try {

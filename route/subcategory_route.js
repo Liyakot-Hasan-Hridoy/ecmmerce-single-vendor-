@@ -9,5 +9,6 @@ const subcategoryController = require("../controller/subcategory_controller");
 const authtoken = require("../middleware/middleware");
 
 subcategory_route.post("/add-subcategory",authtoken, subcategoryController.addSubcategory);
+subcategory_route.get("/get-subcategory",authtoken, subcategoryController.getSubCategory);
 
 module.exports = subcategory_route;

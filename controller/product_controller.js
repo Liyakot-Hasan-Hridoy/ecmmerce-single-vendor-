@@ -1,5 +1,6 @@
 const Product = require("../model/product_model");
 const categoryController = require("../controller/category_controller");
+const subcategoryController = require("../controller/subcategory_controller");
 const storeController = require("../controller/store_controller");
 
 module.exports = {
@@ -32,26 +33,41 @@ module.exports = {
         }
     },//ADD PRODUCT
 
+
+    
     //GET PRODUCT
     getProduct: async (req, res) => {
         try {
             var send_data = [];
             var category_data = await categoryController.getCategoryes();
+            
             if (category_data.length > 0) {
                 for (let i = 0; i < category_data.length; i++) {
                     var product_data = [];
                     var cat_id = category_data[i]["_id"].toString();
                     var cat_product = await Product.find({ category_id: cat_id });
+
+
+
                     if (cat_product.length > 0) {
                         for (let j = 0; j < cat_product.length; j++) {
                             var store_data = await storeController.getStore(cat_product[j]["store_id"]);
                             product_data.push({
-                                "product_name": cat_product[j]["name"],
-                                "product_images": cat_product[j]["images"],
+                                "product_id": cat_product[j]["_id"],
+                                "vendor_id": cat_product[j]["vendor_id"],
+                                "store_id": cat_product[j]["store_id"],
+                                "name": cat_product[j]["name"],
+                                "price": cat_product[j]["price"],
+                                "discount": cat_product[j]["discount"],
+                                "category_id": cat_product[j]["category_id"],
+                                "subcategory_id": cat_product[j]["subcategory_id"],
+                                "images": cat_product[j]["images"],
                                 "store_address": store_data['address']
                             });
                         }
                     }
+
+
 
                     send_data.push({
                         "category": category_data[i]['category'],
@@ -67,7 +83,13 @@ module.exports = {
         } catch (error) {
             res.status(400).json(error.message);
         }
-    },//GET PRODUCT
+    }, //GET PRODUCT
+
+
+
+    
+
+
 
     //SEARCH PRODUCT
     searchProduct: async (req, res) => {
