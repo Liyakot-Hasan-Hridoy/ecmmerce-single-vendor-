@@ -25,7 +25,7 @@ const sendResetPasswordMail = async (name, email, token) => {
         const mailOption = {
             from: config.emailUser,
             to: email,
-            subject: "for Reser Password",
+            subject: "for Reset Password",
             // html: "<p> Hii " + name + ", Please copy the link and <a href='http://localhost:3000/api/reset-password?token=" + token + "'> reset your password</a> "
             html: `<p> Hi ${name}, Please copy the link and <a href='http://localhost:3000/api/reset-password?token=${token}'> reset your password</a></p>`
         }
